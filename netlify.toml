@@ -1,0 +1,56 @@
+[build]
+  publish = "."
+
+[functions]
+  node_bundler = "esbuild"
+  directory = "netlify/functions"
+
+[[redirects]]
+  from = "/api/agenda"
+  to   = "/.netlify/functions/agenda"
+  status = 200
+
+[[redirects]]
+  from = "/api/agenda/*"
+  to   = "/.netlify/functions/agenda"
+  status = 200
+
+[[redirects]]
+  from = "/api/calendar"
+  to   = "/.netlify/functions/calendar"
+  status = 200
+
+[[redirects]]
+  from = "/api/calendar/*"
+  to   = "/.netlify/functions/calendar"
+  status = 200
+
+[[redirects]]
+  from = "/api/designacoes"
+  to   = "/.netlify/functions/designacoes"
+  status = 200
+
+[[redirects]]
+  from = "/api/designacoes/*"
+  to   = "/.netlify/functions/designacoes"
+  status = 200
+
+[[redirects]]
+  from = "/api/reunioes"
+  to   = "/.netlify/functions/reunioes"
+  status = 200
+
+[[redirects]]
+  from = "/api/reunioes/*"
+  to   = "/.netlify/functions/reunioes"
+  status = 200
+
+[[redirects]]
+  from = "/api/organograma"
+  to   = "/.netlify/functions/organograma"
+  status = 200
+
+[[redirects]]
+  from = "/api/organograma/*"
+  to   = "/.netlify/functions/organograma"
+  status = 200
