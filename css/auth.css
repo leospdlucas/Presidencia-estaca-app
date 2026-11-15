@@ -1,0 +1,61 @@
+/* ── Login, chip do usuário e administração ── */
+body.sem-sessao > :not(#login-overlay):not(script) { visibility: hidden; }
+
+#login-overlay {
+  position: fixed; inset: 0; z-index: 1000; display: none;
+  align-items: center; justify-content: center; padding: 16px;
+  background: radial-gradient(circle at 50% 20%, var(--bg3), var(--bg) 70%);
+}
+#login-overlay.open { display: flex; visibility: visible; }
+.login-card {
+  width: 100%; max-width: 380px; background: var(--bg2);
+  border: 1px solid rgba(201,168,76,.35); border-radius: 16px;
+  padding: 28px 22px 22px; box-shadow: 0 12px 40px rgba(0,0,0,.45);
+}
+.login-card h1 { font-size: 18px; color: var(--text); text-align: center; margin-bottom: 4px; }
+.login-card .login-sub { font-size: 12px; color: var(--subtle); text-align: center; margin-bottom: 20px; }
+.login-card label { display: block; font-size: 11.5px; font-weight: 700; color: var(--silver); text-transform: uppercase; letter-spacing: .6px; margin: 12px 0 5px; }
+.login-card select, .login-card input {
+  width: 100%; background: var(--bg3); border: 1px solid #1e3a5f; border-radius: 10px;
+  padding: 12px; color: var(--text); font-size: 16px; font-family: inherit; outline: none;
+}
+.login-card input { letter-spacing: 6px; text-align: center; }
+.login-card select:focus, .login-card input:focus { border-color: var(--gold); }
+.login-card button { width: 100%; margin-top: 18px; padding: 13px; border: none; border-radius: 10px; background: var(--gold); color: #0a1628; font-weight: 800; font-size: 15px; cursor: pointer; }
+.login-card button:disabled { opacity: .6; cursor: wait; }
+.login-msg { min-height: 18px; font-size: 13px; margin-top: 12px; text-align: center; color: var(--subtle); }
+.login-msg.erro { color: var(--red); }
+.login-msg.aviso { color: var(--amber); }
+.login-ajuda { font-size: 12px; color: var(--amber); background: rgba(240,160,80,.1); border-radius: 8px; padding: 8px 10px; margin-top: 10px; line-height: 1.45; }
+.login-rodape { font-size: 11px; color: var(--subtle); text-align: center; margin-top: 16px; line-height: 1.5; }
+
+#user-chip { position: relative; z-index: 5; }
+#user-chip > button {
+  background: rgba(201,168,76,.15); border: 1px solid rgba(201,168,76,.4); color: var(--gold2);
+  border-radius: 8px; padding: 4px 10px; font-size: 12px; cursor: pointer; max-width: 42vw;
+  white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+}
+#user-menu {
+  display: none; position: absolute; top: 34px; left: 0; min-width: 220px; text-align: left;
+  background: var(--bg2); border: 1px solid rgba(255,255,255,.12); border-radius: 10px;
+  box-shadow: 0 8px 24px rgba(0,0,0,.4); overflow: hidden;
+}
+#user-menu.open { display: block; }
+#user-menu button { display: block; width: 100%; background: none; border: none; text-align: left; padding: 11px 14px; color: var(--text); font-size: 13px; cursor: pointer; }
+#user-menu button:hover { background: var(--bg3); }
+#user-menu hr { border: none; border-top: 1px solid rgba(255,255,255,.08); margin: 0; }
+
+.usuario-linha { display: flex; align-items: center; justify-content: space-between; gap: 8px; padding: 10px 0; border-bottom: 1px solid rgba(255,255,255,.06); flex-wrap: wrap; }
+.usuario-linha strong { display: block; color: var(--text); font-size: 14px; }
+.usuario-meta { font-size: 11.5px; color: var(--subtle); }
+.usuario-acoes { display: flex; gap: 6px; flex-wrap: wrap; }
+.btn-mini { background: var(--bg3); border: 1px solid rgba(255,255,255,.12); color: var(--text); border-radius: 6px; padding: 5px 9px; font-size: 12px; cursor: pointer; }
+.btn-mini:hover { border-color: var(--gold); }
+.aviso-box { font-size: 12.5px; line-height: 1.5; color: var(--amber); background: rgba(240,160,80,.1); border: 1px solid rgba(240,160,80,.25); border-radius: 8px; padding: 10px 12px; margin-bottom: 14px; }
+.aviso-sigilo { font-size: 11.5px; line-height: 1.45; color: var(--subtle); border-left: 3px solid var(--amber); padding: 6px 10px; margin: 0 0 14px; background: rgba(240,160,80,.06); border-radius: 0 6px 6px 0; }
+
+[data-theme="light"] .login-card { border-color: #d6c28a; }
+[data-theme="light"] .login-card select, [data-theme="light"] .login-card input { border-color: #c0ccd8; }
+[data-theme="light"] #user-menu { border-color: #dde3ed; }
+[data-theme="light"] #user-chip > button { background: rgba(255,255,255,.15); color: #e8edf2; }
+
