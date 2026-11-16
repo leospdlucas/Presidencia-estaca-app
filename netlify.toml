@@ -1,56 +1,30 @@
 [build]
-  publish = "."
+  command = "npm run build"
+  publish = "dist"
+
+[build.environment]
+  NODE_VERSION = "20"
 
 [functions]
   node_bundler = "esbuild"
   directory = "netlify/functions"
 
-[[redirects]]
-  from = "/api/agenda"
-  to   = "/.netlify/functions/agenda"
-  status = 200
+# As rotas /api/* são declaradas em cada função (export const config = { path }).
 
-[[redirects]]
-  from = "/api/agenda/*"
-  to   = "/.netlify/functions/agenda"
-  status = 200
+[[headers]]
+  for = "/*"
+  [headers.values]
+    X-Content-Type-Options = "nosniff"
+    X-Frame-Options = "DENY"
+    Referrer-Policy = "same-origin"
+    Permissions-Policy = "camera=(), microphone=(), geolocation=()"
 
-[[redirects]]
-  from = "/api/calendar"
-  to   = "/.netlify/functions/calendar"
-  status = 200
+[[headers]]
+  for = "/sw.js"
+  [headers.values]
+    Cache-Control = "no-cache"
 
-[[redirects]]
-  from = "/api/calendar/*"
-  to   = "/.netlify/functions/calendar"
-  status = 200
-
-[[redirects]]
-  from = "/api/designacoes"
-  to   = "/.netlify/functions/designacoes"
-  status = 200
-
-[[redirects]]
-  from = "/api/designacoes/*"
-  to   = "/.netlify/functions/designacoes"
-  status = 200
-
-[[redirects]]
-  from = "/api/reunioes"
-  to   = "/.netlify/functions/reunioes"
-  status = 200
-
-[[redirects]]
-  from = "/api/reunioes/*"
-  to   = "/.netlify/functions/reunioes"
-  status = 200
-
-[[redirects]]
-  from = "/api/organograma"
-  to   = "/.netlify/functions/organograma"
-  status = 200
-
-[[redirects]]
-  from = "/api/organograma/*"
-  to   = "/.netlify/functions/organograma"
-  status = 200
+[[headers]]
+  for = "/index.html"
+  [headers.values]
+    Cache-Control = "no-cache"
