@@ -13,6 +13,7 @@
 <link rel="stylesheet" href="/css/app.css">
 <link rel="stylesheet" href="/css/auth.css">
 <link rel="stylesheet" href="/css/modulos.css">
+<script src="/js/demo.js"></script>
 <script src="/js/auth.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.2/jspdf.umd.min.js" defer></script>
 <script>
@@ -34,6 +35,7 @@
     <button id="login-btn" type="submit">Entrar</button>
     <div id="login-msg" class="login-msg"></div>
     <div class="login-rodape">Esqueceu o PIN? Peça a um administrador para redefini-lo.</div>
+    <button type="button" class="login-demo" onclick="Demo.entrar()">👀 Ver demonstração com dados fictícios</button>
   </form>
 </div>
 
@@ -119,6 +121,7 @@
     <div class="tab-mobile-item" id="tmi-cal" onclick="showTabMobile('cal')"><span style="font-size:16px">📆</span><span style="flex:1">Calendário</span><span class="tmi-dot" style="background:#f48fb1"></span></div>
     <div class="tab-mobile-item" id="tmi-conf" onclick="showTabMobile('conf')"><span style="font-size:16px">🏛️</span><span style="flex:1">Conferência</span><span class="tmi-dot" style="background:var(--blue2)"></span></div>
     <div class="tab-mobile-item" id="tmi-disc" onclick="showTabMobile('disc')"><span style="font-size:16px">🎤</span><span style="flex:1">Discursos</span><span class="tmi-dot" style="background:#ffcc80"></span></div>
+    <div class="tab-mobile-item" id="tmi-dividir" onclick="showTabMobile('dividir')"><span style="font-size:16px">🌱</span><span style="flex:1">Dividir a Estaca</span><span class="tmi-dot" style="background:#b9f6ca"></span></div>
     <div class="tab-mobile-grupo">Pessoas</div>
     <div class="tab-mobile-item" id="tmi-chamados" onclick="showTabMobile('chamados')"><span style="font-size:16px">📋</span><span style="flex:1">Chamados</span><span class="tmi-dot" style="background:var(--green)"></span></div>
     <div class="tab-mobile-item" id="tmi-miss" onclick="showTabMobile('miss')"><span style="font-size:16px">🌎</span><span style="flex:1">Missionários</span><span class="tmi-dot" style="background:#4dd0e1"></span></div>
@@ -146,6 +149,7 @@
   <button class="tab-btn cal" onclick="showTab('cal',this)">📆 Calendário</button>
   <button class="tab-btn conf" onclick="showTab('conf',this)">🏛️ Conferência</button>
   <button class="tab-btn disc" onclick="showTab('disc',this)">🎤 Discursos</button>
+  <button class="tab-btn dividir" onclick="showTab('dividir',this)">🌱 Dividir a Estaca</button>
   <button class="tab-btn chamados" onclick="showTab('chamados',this)">📋 Chamados</button>
   <button class="tab-btn miss" onclick="showTab('miss',this)">🌎 Missionários</button>
   <button class="tab-btn lideres" onclick="showTab('lideres',this)">👥 Líderes</button>
@@ -1760,10 +1764,10 @@
   <div class="ajuda-section">
     <div class="ajuda-section-title">🗂 Visão Geral do App</div>
     <div class="ajuda-card">
-      <p>O painel tem <strong>20 abas</strong> em quatro grupos. No computador, use os botões do topo (role para o lado). No celular, toque no seletor abaixo da busca: as abas aparecem agrupadas.</p>
+      <p>O painel tem <strong>21 abas</strong> em quatro grupos. No computador, use os botões do topo (role para o lado). No celular, toque no seletor abaixo da busca: as abas aparecem agrupadas.</p>
       <div class="ajuda-badge-row">
         <span class="ajuda-badge ab-gold">Presidência: Presidente · Conselheiros · Secretários</span>
-        <span class="ajuda-badge ab-blue">Planejamento: Acompanhamento · Agenda · Designações · Reuniões · Calendário · Conferência · Discursos</span>
+        <span class="ajuda-badge ab-blue">Planejamento: Acompanhamento · Agenda · Designações · Reuniões · Calendário · Conferência · Discursos · Dividir a Estaca</span>
         <span class="ajuda-badge ab-green">Pessoas: Chamados · Missionários · Líderes · Organograma</span>
         <span class="ajuda-badge ab-purple">Referência: Sumo Sacerdotes · Ordenanças · Notas · Como usar</span>
       </div>
@@ -1781,6 +1785,19 @@
         <li>Cinco PINs errados bloqueiam o usuário por 15 minutos. Esqueceu o PIN? Um administrador redefine.</li>
         <li>Administradores também veem <strong>Gerenciar usuários</strong> e <strong>Importar lista de membros</strong> (CSV do LCR; só nome, sexo e ala são guardados).</li>
         <li><strong>Nunca registre</strong> conteúdo de entrevistas, assuntos de dignidade ou deliberações de conselhos de condição de membro.</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- MODO DEMONSTRATIVO -->
+  <div class="ajuda-section">
+    <div class="ajuda-section-title">👀 Modo demonstrativo</div>
+    <div class="ajuda-card">
+      <ul>
+        <li>Na tela de login, toque em <strong>Ver demonstração</strong> (ou abra o endereço do painel com <code>?demo=1</code>). Não precisa de PIN.</li>
+        <li>Todas as abas aparecem preenchidas com uma <strong>estaca fictícia</strong>. Nomes reais escritos nas telas são trocados por nomes fictícios.</li>
+        <li><strong>Nada é enviado ao servidor.</strong> Pode criar, editar e excluir à vontade: as alterações ficam só naquela aba do navegador e somem ao fechá-la.</li>
+        <li>Use <strong>↺ Reiniciar</strong> na faixa laranja para voltar aos dados de exemplo e <strong>Sair</strong> para voltar à tela de login.</li>
       </ul>
     </div>
   </div>
@@ -1812,6 +1829,16 @@
         <li><strong>Discursos</strong>: escala dos sumos conselheiros e presidências de organizações da estaca nas alas. Defina a frequência no seletor; o app avisa quais alas ficaram sem orador.</li>
         <li><strong>Líderes</strong>: lideranças da estaca e das alas, com data do apoio e do treinamento de proteção (válido por 3 anos).</li>
         <li><strong>Missionários</strong>: do preparo ao relato no sumo conselho, com aviso de retorno próximo.</li>
+      </ul>
+    </div>
+    <div class="ajuda-card">
+      <div class="ajuda-card-title">🌱 Vamos dividir a Estaca <span class="tag">36</span></div>
+      <ul>
+        <li><strong>Dados</strong>: registre a cada trimestre, por ala, os quatro indicadores do Manual (membros, portadores do SM dizimistas e capazes de liderar, adultos e jovens participantes). Dá para contar a partir de um CSV do LCR: o arquivo é lido só no aparelho e apenas os totais são gravados.</li>
+        <li><strong>Visão geral</strong>: compara a soma das alas com o dobro do mínimo de uma estaca (as duas estacas precisam do mínimo) e projeta quando cada número será atingido no ritmo atual.</li>
+        <li><strong>Por ala</strong>: mostra quem está abaixo do mínimo de uma ala e quem já poderia gerar uma nova ala.</li>
+        <li><strong>Simulador</strong>: distribua as alas entre as duas estacas, simule a divisão de uma ala, salve cenários e imprima o estudo.</li>
+        <li><strong>Metas</strong>: metas por ala ou da estaca, acompanhadas pelo último número registrado.</li>
       </ul>
     </div>
     <div class="ajuda-card">
@@ -2176,6 +2203,18 @@
     <button class="m-btn" onclick="mudarMesDiscursos(1)" aria-label="Próximo mês">›</button>
   </div>
   <div id="disc-lista"><div class="m-vazio">Carregando…</div></div>
+</div>
+
+<!-- ===================== VAMOS DIVIDIR A ESTACA ===================== -->
+<div class="panel" id="panel-dividir">
+  <div class="m-head">
+    <div>
+      <h2>🌱 Vamos dividir a Estaca</h2>
+      <p>Acompanhe os requisitos do Manual, simule cenários e defina metas para fortalecer as alas. <span class="m-ref">Manual Geral 36</span></p>
+    </div>
+  </div>
+  <div class="m-filtros" id="dividir-vistas"></div>
+  <div id="dividir-conteudo"><div class="m-vazio">Carregando…</div></div>
 </div>
 
 <!-- ===================== MISSIONÁRIOS ===================== -->
@@ -2558,6 +2597,30 @@
   </div>
 </div>
 
+<!-- ── DIVIDIR: IMPORTAR RELATÓRIO ── -->
+<div class="modal-overlay" id="lcr-modal" onclick="if(event.target===this)fecharModal('lcr-modal')">
+  <div class="modal">
+    <div class="modal-header"><h3>Contar a partir de relatório do LCR</h3><button class="modal-close" onclick="fecharModal('lcr-modal')">✕</button></div>
+    <form class="modal-body" id="lcr-form" onsubmit="aplicarImportacao(event)">
+      <p class="aviso-sigilo">🔒 O arquivo é lido só neste aparelho. O app conta as linhas por ala e guarda apenas os totais.</p>
+      <div class="form-row"><label>Arquivo CSV exportado do LCR</label><input type="file" id="lcr-arquivo" accept=".csv,text/csv"></div>
+      <div class="lcr-config" hidden>
+        <div class="form-row-2">
+          <div class="form-row"><label>Coluna da ala</label><select name="colunaAla" onchange="previaImportacao()"></select></div>
+          <div class="form-row"><label>Preencher o indicador</label><select name="indicador"></select></div>
+        </div>
+        <div class="form-row-2">
+          <div class="form-row"><label>Filtrar pela coluna</label><select name="colunaFiltro" onchange="previaImportacao()"></select></div>
+          <div class="form-row"><label>Contendo (separe por vírgula)</label><input name="valoresFiltro" placeholder="Ex.: Élder, Sumo Sacerdote" oninput="previaImportacao()"></div>
+        </div>
+        <p class="m-ajuda">Exemplo: num relatório de membros, filtre a coluna do ofício do sacerdócio por “Élder, Sumo Sacerdote” para contar portadores do SM. Ajuste depois à mão o que o relatório não informa (dízimo integral, capacidade de liderar).</p>
+        <div id="lcr-previa"></div>
+        <button class="btn-save" type="submit">Aplicar contagem</button>
+      </div>
+    </form>
+  </div>
+</div>
+
 <!-- ── FAB ADD ── -->
 <button class="fab-add" id="fab-add" onclick="openModal()">＋ Nova Entrevista</button>
 
@@ -2852,6 +2915,7 @@
 <script src="/js/missionarios.js"></script>
 <script src="/js/discursos.js"></script>
 <script src="/js/acompanhamento.js"></script>
+<script src="/js/dividir.js"></script>
 <script src="/js/membros.js"></script>
 <script src="/js/config.js"></script>
 <script src="/js/app.js"></script>

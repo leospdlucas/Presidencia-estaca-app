@@ -152,3 +152,17 @@ test("sem AUTH_SECRET o servidor recusa com mensagem clara", async () => {
   assert.equal(r.status, 500);
   assert.match(r.error, /AUTH_SECRET/);
 });
+
+test("crescimento valida período e números e não aceita tipo desconhecido", async () => {
+  const crescimento = (await import("../netlify/functions/crescimento.js")).default;
+  const { token } = await prepararAdmin();
+  const ruim = await crescimento(req("POST", "/api/crescimento", { token, corpo: { tipo: "indicador", ala: "Ala X", periodo: "2026-5", membros: 10 } }));
+  assert.equal(ruim.status, 400);
+  const negativo = await crescimento(req("POST", "/api/crescimento", { token, corpo: { tipo: "indicador", ala: "Ala X", periodo: "2026-T3", membros: -4 } }));
+  assert.equal(negativo.status, 400);
+  const tipo = await crescimento(req("POST", "/api/crescimento", { token, corpo: { tipo: "planilha", linhas: [] } }));
+  assert.equal(tipo.status, 400);
+  const ok = await crescimento(req("POST", "/api/crescimento", { token, corpo: { tipo: "indicador", ala: "Ala X", periodo: "2026-T3", membros: "250.6" } }));
+  assert.equal(ok.status, 201);
+  assert.equal((await corpo(ok)).membros, 251);
+});

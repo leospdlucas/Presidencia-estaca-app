@@ -59,3 +59,12 @@ body.sem-sessao > :not(#login-overlay):not(script) { visibility: hidden; }
 [data-theme="light"] #user-menu { border-color: #dde3ed; }
 [data-theme="light"] #user-chip > button { background: rgba(255,255,255,.15); color: #e8edf2; }
 
+
+.login-demo { background: transparent !important; color: var(--gold2) !important; border: 1px dashed rgba(201,168,76,.5) !important; font-weight: 600 !important; font-size: 13.5px !important; margin-top: 14px !important; }
+
+/* faixa do modo demonstrativo */
+#faixa-demo { display: flex; align-items: center; justify-content: space-between; gap: 8px; flex-wrap: wrap; padding: 8px 14px; background: repeating-linear-gradient(135deg, #7c2d12, #7c2d12 12px, #9a3412 12px, #9a3412 24px); color: #fff7ed; font-size: 12.5px; position: relative; z-index: 120; }
+#faixa-demo button { background: rgba(255,255,255,.15); border: 1px solid rgba(255,255,255,.35); color: #fff; border-radius: 6px; padding: 4px 10px; font-size: 12px; cursor: pointer; margin-left: 6px; }
+#faixa-demo button:hover { background: rgba(255,255,255,.28); }
+body.modo-demo header::after { content: 'DEMONSTRAÇÃO'; position: absolute; top: 10px; right: -34px; transform: rotate(35deg); background: #c2410c; color: #fff; font-size: 9.5px; font-weight: 800; letter-spacing: 1px; padding: 3px 40px; pointer-events: none; }
+body.modo-demo header { overflow: hidden; }

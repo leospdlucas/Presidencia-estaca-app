@@ -20,6 +20,19 @@ function opcoesAlas(selecionada = '', vazia = '— Selecione —') {
     alasDaEstaca().map(a => `<option${a === selecionada ? ' selected' : ''}>${esc(a)}</option>`).join('');
 }
 
+/** Recria as listas de alas fixas no HTML a partir da configuração. */
+function sincronizarSelectsAlas() {
+  ['f-ala', 'sc-ala', 'sc-ala-desig'].forEach(id => {
+    const sel = document.getElementById(id);
+    if (!sel) return;
+    const atual = sel.value;
+    const primeira = sel.options[0] && (sel.options[0].value === '' || /^—/.test(sel.options[0].textContent)) ? sel.options[0].outerHTML : '';
+    sel.innerHTML = primeira + alasDaEstaca().map(a => `<option>${esc(a)}</option>`).join('');
+    if ([...sel.options].some(o => o.value === atual)) sel.value = atual;
+  });
+}
+document.addEventListener('config:carregada', sincronizarSelectsAlas);
+
 // ── datas ──
 function hojeISO() {
   const d = new Date();

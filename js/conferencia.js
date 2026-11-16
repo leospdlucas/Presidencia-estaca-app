@@ -612,6 +612,9 @@ function imprimirProgramaConf(id) {
 }
 
 // ── registro da aba ──────────────────────────
+// O painel de acompanhamento e os chamados usam as conferências desde o início
+Auth.pronto.then(() => conferencias.carregar());
+
 registrarAba('conf', {
   emoji: '🏛️', nome: 'Conferência',
   carregar: () => conferencias.carregar(),

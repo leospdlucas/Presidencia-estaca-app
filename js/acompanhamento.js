@@ -102,6 +102,12 @@ function itensAtencao() {
     const d = diasAte(p);
     if (d >= 0 && d <= 15) add('info', 'Secretaria', `Relatório trimestral vence em ${fmtDataBR(p)} (${d} dia(s))`, 'sec-est', '33.3.2');
   });
+  // Dividir a Estaca: números do trimestre anterior ainda não registrados
+  if (typeof crescimento !== 'undefined' && crescimento.carregado && typeof periodoDe === 'function') {
+    const anterior = periodoAnterior(periodoDe());
+    const faltam = alasDaEstaca().filter(a => !dadoDe(a, anterior));
+    if (faltam.length) add('info', 'Dividir a Estaca', `Registrar os números do ${rotuloPeriodo(anterior)} (${faltam.length} ala(s) sem dados)`, 'dividir', '36');
+  }
   const ordem = { erro: 0, aviso: 1, info: 2 };
   return itens.sort((a, b) => ordem[a.nivel] - ordem[b.nivel]);
 }

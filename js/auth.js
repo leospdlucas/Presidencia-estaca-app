@@ -17,6 +17,7 @@ const Auth = (() => {
   let appIniciado = false;
 
   function carregar() {
+    if (typeof Demo !== 'undefined' && Demo.ativo) return Demo.sessao();
     try {
       const s = JSON.parse(localStorage.getItem(CHAVE) || 'null');
       return s && s.token && s.exp > Date.now() ? s : null;
@@ -24,7 +25,22 @@ const Auth = (() => {
   }
   function guardar(s) {
     sessao = s;
+    if (typeof Demo !== 'undefined' && Demo.ativo) return; // demonstração não grava sessão
     try { s ? localStorage.setItem(CHAVE, JSON.stringify(s)) : localStorage.removeItem(CHAVE); } catch {}
+  }
+
+  // Lê a resposta da API. Se vier HTML (ex.: proteção de visitantes do
+  // Netlify ativa), explica o problema em vez de mostrar erro técnico.
+  async function lerJson(r) {
+    const tipo = r.headers.get('content-type') || '';
+    if (!tipo.includes('application/json')) {
+      const txt = await r.text().catch(() => '');
+      if (/edge-access|Login Redirect/i.test(txt) || r.status === 401) {
+        throw new Error('O Netlify está bloqueando o acesso ao servidor (proteção de visitantes ativa no site). Desative em Project configuration → Access & security → Visitor access.');
+      }
+      throw new Error(`Resposta inesperada do servidor (HTTP ${r.status}). As funções foram publicadas?`);
+    }
+    return r.json();
   }
 
   function ehApi(url) {
@@ -37,6 +53,8 @@ const Auth = (() => {
   window.fetch = async (entrada, init = {}) => {
     const url = typeof entrada === 'string' ? entrada : entrada.url;
     if (!ehApi(url)) return fetchOriginal(entrada, init);
+    // Demonstração: nenhuma chamada à API sai do navegador
+    if (typeof Demo !== 'undefined' && Demo.ativo) return Demo.responder(entrada, init);
     const headers = new Headers(init.headers || (entrada instanceof Request ? entrada.headers : undefined));
     if (sessao?.token) headers.set('Authorization', 'Bearer ' + sessao.token);
     const res = await fetchOriginal(entrada, { ...init, headers });
@@ -63,7 +81,7 @@ const Auth = (() => {
     sel.innerHTML = '<option value="">Carregando…</option>';
     try {
       const r = await fetchOriginal('/api/auth', { cache: 'no-store' });
-      const dados = await r.json();
+      const dados = await lerJson(r);
       if (!r.ok) throw new Error(dados.error || 'Falha ao carregar usuários');
       sel.innerHTML = '';
       if (dados.configuracaoInicial) {
@@ -98,7 +116,7 @@ const Auth = (() => {
         method: 'POST', headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ acao: 'entrar', usuario, pin: pinEl.value }),
       });
-      const dados = await r.json();
+      const dados = await lerJson(r);
       if (!r.ok) throw new Error(dados.error || 'Não foi possível entrar.');
       guardar({ token: dados.token, exp: dados.exp, usuario: dados.usuario, bootstrap: !!dados.bootstrap });
       localStorage.setItem(CHAVE + '-ultimo', usuario);
@@ -147,11 +165,13 @@ const Auth = (() => {
   }
 
   function sair() {
+    if (typeof Demo !== 'undefined' && Demo.ativo) return Demo.sair();
     guardar(null);
     atualizarChip();
     mostrarLogin();
   }
   async function sairDeTodos() {
+    if (typeof Demo !== 'undefined' && Demo.ativo) return Demo.sair();
     if (!confirm('Encerrar sua sessão em todos os aparelhos?')) return;
     try { await chamar('sairDeTodos'); } catch {}
     sair();

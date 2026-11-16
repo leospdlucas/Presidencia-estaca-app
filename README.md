@@ -27,9 +27,18 @@ Sem `AUTH_SECRET`, o login mostra a mensagem "Servidor sem AUTH_SECRET configura
 | Grupo | Abas |
 |---|---|
 | Presidência | Deveres do presidente, conselheiros e secretários (Manual Geral cap. 6) |
-| Planejamento | **Acompanhamento** (o que está atrasado), Agenda, Designações, Reuniões/atas com pauta sugerida por tipo (29.3), Calendário, **Conferência de Estaca** (29.3.1), **Discursos** da estaca nas alas (6.5.1) |
+| Planejamento | **Acompanhamento** (o que está atrasado), Agenda, Designações, Reuniões/atas com pauta sugerida por tipo (29.3), Calendário, **Conferência de Estaca** (29.3.1), **Discursos** da estaca nas alas (6.5.1), **Vamos dividir a Estaca** (requisitos do cap. 36, simulador e metas; só totais agregados) |
 | Pessoas | **Chamados**, desobrigações e ordenações (30.8, 18.10), **Missionários**, **Líderes** (proteção de crianças e jovens, 30.2), Organograma do sumo conselho |
 | Referência | Sumo sacerdotes, Ordenanças, Notas, Como usar |
+
+## Modo demonstrativo
+
+Para apresentar o painel sem expor dados reais: botão **Ver demonstração** na tela de login ou endereço `/?demo=1`.
+
+- Uma estaca fictícia completa (todas as abas preenchidas, datas relativas ao dia de hoje).
+- Nenhuma chamada `/api/*` sai do navegador; as respostas vêm de um servidor em memória (`js/demo.js`).
+- Alterações ficam no `sessionStorage` da aba e somem ao fechá-la. A fila offline real não é enviada.
+- Nomes reais escritos no HTML (presidência, estaca, alas) são trocados na tela.
 
 ## Segurança
 

@@ -135,3 +135,38 @@
 [data-theme="light"] .tab-btn.chamados.active{background:#15803d;color:#fff}
 [data-theme="light"] .tab-btn.miss.active{background:#0e7490;color:#fff}
 [data-theme="light"] .tab-btn.lideres.active{background:#1e40af;color:#fff}
+
+/* ── Dividir a Estaca: medidores e gráfico ── */
+.dv-titulo { font-size: 14px; font-weight: 700; color: var(--m-titulo); margin-bottom: 4px; }
+.dv-medidor { display: grid; grid-template-columns: minmax(0, 1.1fr) minmax(0, 2fr) auto; align-items: center; gap: 6px 12px; padding: 8px 0; border-top: 1px solid var(--m-borda); }
+.dv-medidor:first-of-type { border-top: none; }
+.dv-medidor-nome { font-size: 13px; color: var(--text); min-width: 0; }
+.dv-medidor-nota { grid-column: 1 / -1; margin-top: -2px; }
+.dv-medidor-barra { --c: var(--blue2); height: 10px; border-radius: 50px; background: color-mix(in srgb, var(--c) 18%, transparent); overflow: hidden; }
+.dv-medidor-barra > span { display: block; height: 100%; border-radius: 50px; background: var(--c); }
+.dv-medidor-barra.ok { --c: var(--green); }
+.dv-medidor-barra.alerta { --c: var(--amber); }
+.dv-medidor-barra.erro { --c: var(--red); }
+.dv-medidor-num { font-size: 12.5px; color: var(--subtle); font-variant-numeric: tabular-nums; display: flex; align-items: center; gap: 6px; justify-content: flex-end; flex-wrap: wrap; }
+.dv-medidor-num strong { color: var(--m-titulo); font-size: 14px; }
+@media (max-width: 560px) {
+  .dv-medidor { grid-template-columns: minmax(0, 1fr) auto; }
+  .dv-medidor-barra { grid-column: 1 / -1; grid-row: 2; }
+}
+.dv-grafico { position: relative; margin-top: 8px; }
+.dv-grafico svg { width: 100%; height: auto; display: block; overflow: visible; }
+.dv-grade { stroke: var(--m-borda); stroke-width: 1; }
+.dv-eixo { fill: var(--subtle); font-size: 13px; font-family: inherit; }
+.dv-ref { stroke: var(--subtle); stroke-width: 1.5; stroke-dasharray: 5 4; }
+.dv-linha { fill: none; stroke: var(--blue2); stroke-width: 2.5; stroke-linejoin: round; }
+.dv-ponto { fill: var(--blue2); stroke: var(--m-fundo); stroke-width: 2; }
+.dv-alvo { fill: transparent; cursor: crosshair; }
+.dv-alvo:hover + text, .dv-alvo:hover { fill: color-mix(in srgb, var(--blue2) 8%, transparent); }
+.dv-tooltip { position: absolute; pointer-events: none; background: var(--m-fundo2); color: var(--text); border: 1px solid var(--m-borda); border-radius: 6px; padding: 5px 9px; font-size: 12px; white-space: nowrap; box-shadow: 0 4px 12px rgba(0,0,0,.25); }
+.dv-tabela { margin-top: 6px; }
+.dv-entrada input { width: 76px; background: var(--m-fundo2); border: 1px solid var(--m-borda); border-radius: 6px; padding: 6px; color: var(--text); font-size: 13px; font-family: inherit; }
+.dv-entrada input:focus { outline: none; border-color: var(--gold); }
+.tab-btn.dividir{color:#b9f6ca;border-color:#b9f6ca}
+.tab-btn.dividir.active{background:#b9f6ca;color:var(--bg)}
+[data-theme="light"] .tab-btn.dividir{color:#166534;border-color:#166534}
+[data-theme="light"] .tab-btn.dividir.active{background:#166534;color:#fff}
